@@ -9,8 +9,34 @@ var usersRouter = require('./routes/users');
 var carRouter = require('./routes/car');
 var boardRouter = require('./routes/board');
 var SelectorRouter = require('./routes/selector');
-
+var Costume = require("./models/car");
 var app = express();
+
+require('dotenv').config();
+const connectionString =
+process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true,
+useUnifiedTopology: true});
+
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+  // Delete everything
+  await Costume.deleteMany();
+  let instance1 = new
+  Costume({costume_type:"ghost", size:'large',
+  cost:25.4});
+  instance1.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("First object saved")
+  });
+  }
+  let reseed = true;
+  if (reseed) { recreateDB();}
+  
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +53,7 @@ app.use('/users', usersRouter);
 app.use('/car', carRouter);
 app.use('/board', boardRouter);
 app.use('/Selector', SelectorRouter);
+app.use('/models/car', Costume);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,5 +70,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
