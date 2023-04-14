@@ -14,7 +14,10 @@ router.delete('/car/:id', car_controller.car_delete);
 // PUT request to update Car.
 router.put('/car/:id', car_controller.car_update_put);
 // GET request for one Car.
-router.get('/car/:id', car_controller.car_detail);
+router.get('/car/:id', car_controller.Car_detail);
 // GET request for list of all Car items.
 router.get('/car', car_controller.car_list);
+
+
+
 module.exports = router;

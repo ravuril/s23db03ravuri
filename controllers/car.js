@@ -55,9 +55,12 @@ exports.car_view_all_Page = async function(req, res) {
     // Even though bodies can be in many different formats, we will be picky
     // and require that it be a json object
     // {"costume_type":"goat", "cost":12, "size":"large"}
-    document.car_type = req.body.car_type;
-    document.cost = req.body.cost;
-    document.size = req.body.size;
+    document.Car_color = req.body.Car_color;
+    document.Car_model = req.body.Car_model;
+    document.Car_Title = req.body.Car_Title;
+    document.Car_mileage = req.body.Car_mileage;
+    document.Car_cost = req.body.Car_cost;
+    
     try{
     let result = await document.save();
     res.send(result);
@@ -67,4 +70,39 @@ exports.car_view_all_Page = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
-    
+
+
+// for a specific Costume.
+exports.Car_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await Car.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+//Handle Costume update form on PUT.
+exports.car_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+try {
+let toUpdate = await Car.findById( req.params.id)
+// Do updates of properties
+if(req.body.car_type)
+toUpdate.car_type = req.body.car_type;
+if(req.body.Car_color) toUpdate.Car_color = req.body.Car_color;
+if(req.body.Car_model) toUpdate.Car_model = req.body.Car_model;
+if(req.body.Car_Title) toUpdate.Car_Title = req.body.Car_Title;
+if(req.body.Car_mileage) toUpdate.Car_mileage = req.body.Car_mileage;
+if(req.body.Car_cost) toUpdate.Car_cost = req.body.Car_cost;
+let result = await toUpdate.save();
+console.log("Sucess " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+}
+};
