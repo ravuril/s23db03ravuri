@@ -1,11 +1,14 @@
 extends layout
 block content
     h1= title
-    - let Car_color = toShow.Car_color
-    - let Car_model = toShow.Car_model
-    - let Car_Title = toShow.Car_Title
-    - let Car_mileage = toShow.Car_mileage
-    - let Car_cost = toShow.Car_cost
+    if(toShow == null)
+        h2 No instance to delete 
+    else
+        - let Car_color = toShow.Car_color
+        - let Car_model = toShow.Car_model
+        - let Car_Title = toShow.Car_Title
+        - let Car_mileage = toShow.Car_mileage
+        - let Car_cost = toShow.Car_cost
         div
             div.row(id="carAttr")
                 div(class="carAttr mr-3") car color is:
