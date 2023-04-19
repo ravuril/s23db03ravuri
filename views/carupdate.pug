@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  h1= title
+  -let carid = toShow._id
+  - let Car_color = toShow.Car_color
+  - let Car_model = toShow.Car_model
+  - let Car_Title = toShow.Car_Title
+  - let Car_mileage = toShow.Car_mileage
+  - let Car_cost = toShow.Car_cost
+
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{carid}
+  - let actionid = "/resource/car/" + carid
+  form(id='CarForm', action= actionid, method="PUT")
+    div.form-group
+        label.carAttr(for='Car_color') Car color
+        input#Car_color(type='text', name='Car_color', value= Car_color )
+    div.form-group
+        label.carAttr(for='Car_model') Car Type
+        input#Car_model(type='text', name='Car_model', value= Car_model )
+    div.form-group
+        label.carAttr(for='Car_Title') Car cost
+        input#Car_Title(type='text', name='Car_Title', value= Car_Title )
+    div.form-group
+        label.carAttr(for='Car_mileage') Car cost
+        input#Car_mileage(type='number', name='Car_mileage', value= Car_mileage )
+    div.form-group
+        label.carAttr(for='Car_cost') Car cost
+        input#Car_cost(type='number', name='Car_cost', value= Car_cost )
+    input(type="submit")
+  script.
+    document.forms['CarForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+    // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method:'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        window.location.href='/Car'
+    // TODO handle body
+      }).catch((error) => {
+    // TODO handle error
+        alert("Update failed " + error )
+      });
+    });
