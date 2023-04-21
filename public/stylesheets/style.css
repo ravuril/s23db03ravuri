@@ -7,7 +7,8 @@ a {
   color: #00B7FF;
 }
 .carAttr {
-  background-color: aquamarine;
+  background-color: rgb(229, 239, 86);
+  border: #00B7FF;
   width: 120px;
   }
   
