@@ -6,7 +6,9 @@ block content
   div(class="container-fluid")
     div(class="row")
       each item,index in items
+        - let destination = `dispatch(\"/car/update?id=${item._id}\")`
         div(class="col-sm-2",onClick=`buy(${index})`)
+          button.btn( class="btn-primary ml-1", onclick= destination) Update
           p Color is #{item.Car_color}
           p Model is #{item.Car_model}
           p Title is #{item.Car_Title}
@@ -14,8 +16,7 @@ block content
           p Cost is #{item.Car_cost}
           //- Bonus Logic
   script.
-    function buy(thing) {
-      thing = thing+1;
-      alert(`You Purchased Item ${thing}`);
+    function dispatch(path){
+      window.location.href=path
     }
     
