@@ -3,12 +3,17 @@ extends layout
 block content
   h1= title
   - let items = results
+          button.btn( class="btn-success", onclick=`dispatch(\"/car/create")`) Create
   div(class="container-fluid")
     div(class="row")
       each item,index in items
         - let destination = `dispatch(\"/car/update?id=${item._id}\")`
+        - let destination2 = `dispatch(\"/car/delete?id=${item._id}\")`
+        - let destination3 = `dispatch(\"/car/detail?id=${item._id}\")`
         div(class="col-sm-2",onClick=`buy(${index})`)
-          button.btn( class="btn-primary ml-1", onclick= destination) Update
+          button.btn( class="btn-warning ml-1", onclick= destination) Update
+          button.btn( class="btn-danger ml-1", onclick= destination2) Delete
+          button.btn( class="btn-primary ml-1", onclick= destination3) Detail
           p Color is #{item.Car_color}
           p Model is #{item.Car_model}
           p Title is #{item.Car_Title}
